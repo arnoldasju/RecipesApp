@@ -7,6 +7,7 @@ const descriptionInp = document.querySelector("#description");
 const caloriesInp = document.querySelector("#calories");
 const photoInp = document.querySelector("#photo");
 const labels = document.querySelectorAll("label");
+const addToListBtn = document.querySelector(".addList");
 let photoUrl = document.querySelector("#photo");
 let recipeList = [];
 let allIngredients = [];
@@ -64,11 +65,24 @@ function previewValidation() {
 
     if(recipe.ingredients.length < 3) {
         labels[1].classList.add("invalid");
+        allIngredients = [];
         invalid = true;
     } else {
         labels[1].classList.remove("invalid");
     }
 
+    if(recipe.calories.length === 0) {
+        caloriesInp.classList.add("invalid");
+        invalid = true;
+    } else {
+        caloriesInp.classList.remove("invalid");
+    }
+
+    console.log(recipe)
+
+    if(invalid) return
+
+    appendPreview();
     console.log(invalid);
 }
 
@@ -88,18 +102,28 @@ function appendPreview() {
         listItem.innerText = ingredient;
     });
 
-    if(photoInp.length === 0) {
-        img.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png";
-    } else {
-        img.src = recipe.photo;
-    }
-
+    img.src = recipe.photo;
     title.innerText = recipe.title;
     description.innerText = recipe.description;
     calories.innerText = "Calories: " + recipe.calories;
 }
 
+function addToListValidation() {
+    let invalid = false;
 
+    if(recipe.photo.length === 0) {
+        photoInp.classList.add("invalid");
+        invalid = true;
+    } else {
+        photoInp.classList.remove("invalid");
+    }
+
+    console.log(recipe)
+    console.log(invalid);
+    if(invalid) return
+
+    localStorage.setItem("recipe", JSON.stringify(recipe));
+}
 
 addIngredient.onclick = () => {
     let input = document.createElement("input");
@@ -114,8 +138,11 @@ getPhotoBtn.onclick = () => {
 }
 
 previewBtn.onclick = () => {
-
     updateRecipe();
     previewValidation();
-    appendPreview();
+}
+
+addToListBtn.onclick = () => {
+    addToListValidation();
+
 }
