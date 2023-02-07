@@ -51,23 +51,20 @@ function appendPreview() {
     const calories = document.querySelector(".prevCal");
     const ingredientsList = document.querySelector(".ingredientList");
 
-    const ingredients = document.querySelectorAll(".ingredient");
+    ingredientsList.innerHTML = "";
+    let ingredients = recipe.ingredients;
 
-    // ingredients.forEach(ingredient => {
-    //
-    // });
+    ingredients.forEach(ingredient => {
+        let listItem = document.createElement("li");
+        ingredientsList.appendChild(listItem);
+        listItem.innerText = ingredient
+    });
 
     img.src = recipe.photo;
     title.innerText = recipe.title;
     description.innerText = recipe.description;
     calories.innerText = "Calories: " + recipe.calories;
-    //ingredientsList.innerHTML = recipe.ingredients
 }
-
-
-
-
-
 
 
 
