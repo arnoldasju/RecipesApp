@@ -80,7 +80,7 @@ function previewValidation() {
         caloriesInp.classList.remove("invalid");
     }
 
-    console.log(recipe)
+    console.log(allIngredients);
 
     if(invalid) return
 
@@ -123,6 +123,23 @@ function addToListValidation() {
     console.log(invalid);
     if(invalid) return
 
+    addToList();
+}
+
+function addToList() {
+    recipeList.recipe.push(recipe);
+
+    // if this exist in localstorage get and then do something else
+
+    localStorage.setItem("recipes", JSON.stringify(recipeList));
+}
+
+function cleanInputs() {
+    titleInp.value = "";
+    ingredientsMain.innerHTML = "";
+    descriptionInp.value = "";
+    caloriesInp.value = "";
+    photoInp.value = "";
 }
 
 addIngredient.onclick = () => {
@@ -144,10 +161,7 @@ previewBtn.onclick = () => {
 
 addToListBtn.onclick = () => {
     addToListValidation();
+    cleanInputs();
 
-    recipeList.recipe.push(recipe);
     console.log(recipeList);
-
-    //localStorage.setItem("recipe", JSON.stringify(recipe));
-    localStorage.setItem("recipes", JSON.stringify(recipeList));
 }

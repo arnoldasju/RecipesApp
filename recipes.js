@@ -1,10 +1,10 @@
 const main = document.querySelector(".main");
+const btn = document.querySelector(".filter");
+const inputs = document.querySelectorAll("input");
+let recipes = [];
 
-function getRecipes() {
-    //const recipe = JSON.parse(localStorage.getItem("recipe"));
+function appendHtml() {
     const recipes = JSON.parse(localStorage.getItem("recipes"));
-    //console.log(recipe)
-    console.log(recipes);
 
     main.innerHTML = "";
     recipes.recipe.map(recipe => {
@@ -13,12 +13,32 @@ function getRecipes() {
             <img src="${recipe.photo}" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">${recipe.title}</h5>
-                <p class="card-text">${recipe.description}</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <p>${recipe.description}</p>
+                <p>${recipe.ingredients}</p>
+                <p>Calories: ${recipe.calories}</p>
             </div>
         </div>
         `
     })
+
+    console.log(recipes);
 }
 
-getRecipes();
+appendHtml();
+
+
+btn.onclick = () => {
+    const values = {
+        title: Number(inputs[0].value),
+        calories: Number(inputs[1].value),
+        ingredients: Number(inputs[2].value)
+    }
+
+    let result = recipes;
+
+    if(values.title) result = recipes.filter(recipe => recipe.title === values.title)
+
+    console.log(result);
+    appendHtml(result);
+}
+
