@@ -9,14 +9,16 @@ const photoInp = document.querySelector("#photo");
 const labels = document.querySelectorAll("label");
 const addToListBtn = document.querySelector(".addList");
 let photoUrl = document.querySelector("#photo");
-let recipeList = [];
+let recipeList = {
+    recipe: []
+};
 let allIngredients = [];
 let recipe = {
     title: "",
     ingredients: [],
     description: "",
     calories: "",
-    photo: "",
+    photo: ""
 }
 
 const getPhoto = () => {
@@ -118,11 +120,9 @@ function addToListValidation() {
         photoInp.classList.remove("invalid");
     }
 
-    console.log(recipe)
     console.log(invalid);
     if(invalid) return
 
-    localStorage.setItem("recipe", JSON.stringify(recipe));
 }
 
 addIngredient.onclick = () => {
@@ -145,4 +145,9 @@ previewBtn.onclick = () => {
 addToListBtn.onclick = () => {
     addToListValidation();
 
+    recipeList.recipe.push(recipe);
+    console.log(recipeList);
+
+    //localStorage.setItem("recipe", JSON.stringify(recipe));
+    localStorage.setItem("recipes", JSON.stringify(recipeList));
 }
